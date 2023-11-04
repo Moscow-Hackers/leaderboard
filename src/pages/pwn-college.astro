@@ -1,0 +1,32 @@
+---
+import { Picture } from 'astro:assets'
+import { getCollection } from 'astro:content'
+
+import Layout from 'layouts/DefaultLayout.astro'
+import { fetchHackers } from 'utils/pwnCollege'
+
+const allHackers = await getCollection('hackers')
+const hackerData = await fetchHackers(allHackers)
+const sortedHackerData = hackerData.sort((a, b) => b.solves - a.solves)
+const showLeaders = hackerData.length > 0
+---
+
+<Layout title="pwn.college Leaderboard">
+  <h1>pwn.college Leaderboard</h1>
+  {
+    showLeaders ? (
+      <ul>
+        {sortedHackerData.map((hacker) => (
+          <li>
+            {hacker.avatar && (
+              <Picture width={40} src={hacker.avatar} alt={hacker.name} />
+            )}
+            {hacker.name} | {hacker.solves}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No leaders yet :sad_face:</p>
+    )
+  }
+</Layout>

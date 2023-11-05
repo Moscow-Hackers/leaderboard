@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets'
+import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 import Layout from 'layouts/DefaultLayout.astro'
@@ -19,7 +19,7 @@ const showLeaders = hackerData.length > 0
         {sortedHackerData.map((hacker) => (
           <li>
             {hacker.avatar && (
-              <Picture width={40} src={hacker.avatar} alt={hacker.name} />
+              <Image width={40} src={hacker.avatar} alt={hacker.name} />
             )}
             {hacker.name} | {hacker.solves}
           </li>

@@ -1,5 +1,7 @@
 # Moscow Hackers Leaderboard
 
+https://moscow-hackers-leaderboard.vercel.app/
+
 Simple leaderboard to track progress on pwn.college and HTB for the Moscow Hackers group.
 
 ## Instructions for Adding a New Hacker

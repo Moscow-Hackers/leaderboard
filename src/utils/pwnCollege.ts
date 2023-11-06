@@ -1,16 +1,4 @@
-type PwnCollegeHacker = {
-  name: string
-  avatar?: string
-  solves: number
-}
-
-interface PwnCollegeUserData {
-  data: {
-    name: string
-    pwnCollegeId: string
-    avatar?: string
-  }
-}
+import type { PwnCollegeHacker, PwnCollegeUserData } from '@/types'
 
 export const fetchHackers = async (hackers: PwnCollegeUserData[]) =>
   await Promise.all(

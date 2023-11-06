@@ -8,7 +8,7 @@ const hackerCollection = defineCollection({
     z.object({
       name: z.string(),
       pwnCollegeId: z.number(),
-      avatar: image().optional(),
+      avatar: z.string().optional(),
     }),
 })
 

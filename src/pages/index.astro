@@ -1,8 +1,25 @@
 ---
-import Layout from 'layouts/DefaultLayout.astro'
+import { getCollection } from 'astro:content'
+
+import Layout from '@/layouts/DefaultLayout.astro'
+import { fetchHackers } from '@/utils/pwnCollege'
+import Leaderboard from '@/components/Leaderboard'
+
+const allHackers = await getCollection('hackers')
+const hackers = await fetchHackers(allHackers)
+const sortedHackers = hackers.sort((a, b) => b.solves - a.solves)
 ---
 
-<Layout>
-  <h1>Home Page</h1>
-  <a href="/pwn-college">pwn.college Leaderboard</a>
+<Layout title="Leaderboard">
+  <h1
+    class="text-4xl font-bold text-center mb-4 text-slate-800 dark:text-slate-100"
+  >
+    Moscow Hackers
+  </h1>
+  <h2
+    class="text-3xl font-bold text-center mb-4 text-green-400 dark:text-green-300"
+  >
+    Leaderboard
+  </h2>
+  <Leaderboard hackers={sortedHackers} client:load />
 </Layout>

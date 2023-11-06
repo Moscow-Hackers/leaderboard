@@ -1,8 +1,11 @@
 ---
-// import BaseHead from '../components/BaseHead.astro';
-// import Footer from '../components/Footer.astro';
+import '@fontsource/ubuntu-mono'
+import '@/styles/globals.css'
+
+import { DarkModeSwitch } from '@/components/DarkModeSwitch'
+
 const { title } = Astro.props
-const siteName = "Moscow Hackers"
+const siteName = 'Moscow Hackers'
 const siteTitle = title ? `${siteName} | ${title}` : siteName
 ---
 
@@ -14,7 +17,38 @@ const siteTitle = title ? `${siteName} | ${title}` : siteName
     <meta name="generator" content={Astro.generator} />
     <title>{siteTitle}</title>
   </head>
-  <body>
-    <slot />
+  <body class="font-mono bg-gray-100 dark:bg-gray-800">
+    <head>
+      <nav class="flex justify-end items-center p-6">
+        <DarkModeSwitch client:load />
+      </nav>
+    </head>
+    <main class="w-full max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <slot />
+    </main>
   </body>
 </html>
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme')
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+  }
+  const isDark = getThemePreference() === 'dark'
+  document.documentElement.classList[isDark ? 'add' : 'remove']('dark')
+
+  if (typeof localStorage !== 'undefined') {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark')
+      localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    })
+  }
+</script>
